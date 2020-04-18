@@ -6,6 +6,11 @@ using NesScripts.Tilemap;
 
 public class EquipmentManager : MonoBehaviour
 {
+
+    public List<GameObject> availableEquipment;
+
+    public List<GameObject> placedEquipment;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,8 +35,16 @@ public class EquipmentManager : MonoBehaviour
             Debug.DrawLine(br, bl, Color.red);
             Debug.DrawLine(bl, tl, Color.red);
         }
+
+        if (Input.GetMouseButtonDown(0) && hover) {
+            Vector3 position = hover.gameObject.transform.position;
+            Instantiate(availableEquipment[0], hover.gameObject.transform);
+        }
     }
 
+    /// <summary>
+    /// Tries to find a tile that the user is hovering over
+    /// </summary>
     public Tile FindHoveredTile()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
