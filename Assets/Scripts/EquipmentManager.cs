@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using NesScripts.Tilemap;
 
 public class EquipmentManager : MonoBehaviour
 {
     public List<GameObject> availableEquipment;
-    protected List<GameObject> placedEquipment;
+    protected List<GameObject> placedEquipment = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -55,7 +56,7 @@ public class EquipmentManager : MonoBehaviour
     public void AddEquipment(GameObject equipment)
     {
         Tile tile = FindHoveredTile();
-        Instantiate(equipment, tile.transform);
+        placedEquipment.Add(Instantiate(equipment, tile.transform));
     }
 
     /// <summary>
@@ -84,5 +85,15 @@ public class EquipmentManager : MonoBehaviour
     public List<GameObject> GetPlacedEquipment()
     {
         return placedEquipment;
+    }
+
+    public float GetRunningCost()
+    {
+        float total = 0.0f;
+        placedEquipment.ForEach(gameObject => {
+            total += gameObject.GetComponent<Equipment>().cost;
+        });
+
+        return total;
     }
 }

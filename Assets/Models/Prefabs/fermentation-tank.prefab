@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b8678e8d37c46c88d60ff21c7494c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 0
+  cost: 2
   maxOutputConnections: 0
   upgrade: {fileID: 0}
 --- !u!1001 &4523622534809254577
@@ -80,7 +80,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: b11ef90892d664d558f7b6f33042a310,
         type: 3}
       propertyPath: m_Name
-      value: fermentation-tank Variant
+      value: fermentation-tank
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b11ef90892d664d558f7b6f33042a310, type: 3}

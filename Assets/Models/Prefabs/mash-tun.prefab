@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b8678e8d37c46c88d60ff21c7494c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 0
+  cost: 4
+  maxOutputConnections: 0
   upgrade: {fileID: 0}
 --- !u!1001 &1022773285682320539
 PrefabInstance:

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b8678e8d37c46c88d60ff21c7494c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 0
+  cost: 1
   maxOutputConnections: 0
   upgrade: {fileID: 0}
 --- !u!1001 &7685629656543189809
@@ -80,7 +80,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 87813529ed848499f8cc4fd7bbf339a3,
         type: 3}
       propertyPath: m_Name
-      value: basic-bottler Variant
+      value: basic-bottler
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87813529ed848499f8cc4fd7bbf339a3, type: 3}
