@@ -44,8 +44,23 @@ public class EquipmentUI : MonoBehaviour
         canvas.enabled = true;
     }
 
-    public void ShowUpdateUIFromEquipmentAndPosition()
+    public void ShowUpdateUIFromEquipmentAndPosition(Vector2 position, GameObject equipmentObject)
     {
+        Equipment equipment = equipmentObject.GetComponent<Equipment>();
+
+        if (!equipment) {
+            return;
+        }
+
+        // TODO: Upgrade button
+        if (equipment.upgrade) {
+
+        }
+
+        // TODO Connect button
+        if (equipment.CanAcceptConnection()) {
+            
+        }
 
     }
 

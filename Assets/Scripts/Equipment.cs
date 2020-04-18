@@ -34,4 +34,9 @@ public class Equipment : MonoBehaviour
     {
         connections.Remove(equipment);
     }
+
+    public bool CanAcceptConnection()
+    {
+        return connections.Count < maxOutputConnections;
+    }
 }
