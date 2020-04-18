@@ -68,7 +68,7 @@ namespace NesScripts.Tilemap
 				// if click, leave object where we placed it
 				if ((BrushMode && Input.GetMouseButton(MouseKeyToPlaceTiles)) || Input.GetMouseButtonUp(MouseKeyToPlaceTiles))
 				{
-					tile.Tilemap.SetTile (TilePrefab, tile.Index, true);
+					tile.GameArea.SetTile (TilePrefab, tile.Index, "TileType_Null", true);
 				}
 			}
 

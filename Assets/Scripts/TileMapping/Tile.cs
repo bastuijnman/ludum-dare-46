@@ -39,7 +39,7 @@ namespace NesScripts.Tilemap
 		}
 
 		// tilemap this tile belongs to
-		public TileMap Tilemap {
+		public GameArea GameArea {
 			get;
 			private set;
 		}
@@ -58,10 +58,11 @@ namespace NesScripts.Tilemap
 		/// Update the tile index in tilemap.
 		/// </summary>
 		/// <param name="index">New tile index.</param>
-		public void Init(TileMap tilemap, Vector2 index)
+		public void Init(GameArea gameArea, Vector2 index, string type)
 		{
 			Index = index;
-			Tilemap = tilemap;
+			GameArea = gameArea;
+			TileTypeName = type;
 			Start ();
 		}
 
@@ -87,7 +88,7 @@ namespace NesScripts.Tilemap
 						Vector2 neighborIndex = Index + new Vector2 (i, j);
 
 						// get neighbor and notify it
-						var neighbor = Tilemap.GetTile (neighborIndex);
+						var neighbor = GameArea.GetTile (neighborIndex);
 						if (neighbor != null) neighbor.Build (false);
 					}
 				}
@@ -129,14 +130,14 @@ namespace NesScripts.Tilemap
 			}
 
 			// get all neighbors
-			var front = Tilemap.GetTile(Index + Vector2.up);
-			var back = Tilemap.GetTile(Index + Vector2.down);
-			var left = Tilemap.GetTile(Index + Vector2.left);
-			var right = Tilemap.GetTile(Index + Vector2.right);
-			var frontLeft = Tilemap.GetTile(Index + Vector2.up + Vector2.left);
-			var frontRight = Tilemap.GetTile(Index + Vector2.up + Vector2.right);
-			var backLeft = Tilemap.GetTile(Index + Vector2.down + Vector2.left);
-			var backRight = Tilemap.GetTile(Index + Vector2.down + Vector2.right);
+			var front = GameArea.GetTile(Index + Vector2.up);
+			var back = GameArea.GetTile(Index + Vector2.down);
+			var left = GameArea.GetTile(Index + Vector2.left);
+			var right = GameArea.GetTile(Index + Vector2.right);
+			var frontLeft = GameArea.GetTile(Index + Vector2.up + Vector2.left);
+			var frontRight = GameArea.GetTile(Index + Vector2.up + Vector2.right);
+			var backLeft = GameArea.GetTile(Index + Vector2.down + Vector2.left);
+			var backRight = GameArea.GetTile(Index + Vector2.down + Vector2.right);
 
 			// get which neighbors are different
 			bool frontDiff = front == null || front.TileType != TileType;
