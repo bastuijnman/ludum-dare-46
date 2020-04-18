@@ -39,12 +39,19 @@ public class EquipmentManager : MonoBehaviour
             Debug.DrawLine(bl, tl, Color.red);
         }
 
+        /*
+         * Only open radial UI when it is not yet active.
+         */
         bool isUIEnabled = gameObject.GetComponent<EquipmentUI>().IsUIEnabled();
         if (Input.GetMouseButtonDown(0) && hover && !isUIEnabled) {
             gameObject.GetComponent<EquipmentUI>().CreateUIFromAvailableEquipmentAndPosition(Input.mousePosition, availableEquipment);
         }
     }
 
+    /// <summary>
+    /// Add equipment to the current brewery. 
+    /// TODO: tile will need to be passed in, this can cause the wrong tile to be selected
+    /// </summary>
     public void AddEquipment(GameObject equipment)
     {
         Tile tile = FindHoveredTile();

@@ -44,6 +44,10 @@ public class EquipmentUI : MonoBehaviour
         canvas.enabled = true;
     }
 
+    /// <summary>
+    /// Handles radial button click, will add the assigned equipment to the
+    /// equipment manager.
+    /// </summary>
     private UnityAction OnButtonClick(GameObject equipment)
     {
         return () => { 
