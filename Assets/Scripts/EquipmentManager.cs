@@ -9,7 +9,7 @@ public class EquipmentManager : MonoBehaviour
 
     public List<GameObject> availableEquipment;
 
-    public List<GameObject> placedEquipment;
+    protected List<GameObject> placedEquipment;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +22,11 @@ public class EquipmentManager : MonoBehaviour
     {
         Tile hover = FindHoveredTile();
         if (hover) {
+
+            /*
+             * DIRTY DIRTY DIRTY method of showing which tile is actively being
+             * hovered over
+             */
             Vector3 size = hover.gameObject.GetComponent<Renderer>().bounds.size;
             Vector3 position = hover.gameObject.transform.position;
 
@@ -38,7 +43,7 @@ public class EquipmentManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && hover) {
             Vector3 position = hover.gameObject.transform.position;
-            Instantiate(availableEquipment[0], hover.gameObject.transform);
+            placedEquipment.Add(Instantiate(availableEquipment[0], hover.gameObject.transform));
         }
     }
 
@@ -59,5 +64,14 @@ public class EquipmentManager : MonoBehaviour
             return tile;
         }
         return null;
+    }
+
+    /// <summary>
+    /// Get currently placed equipment in the manager
+    /// </summary>
+
+    public List<GameObject> GetPlacedEquipment()
+    {
+        return placedEquipment;
     }
 }
