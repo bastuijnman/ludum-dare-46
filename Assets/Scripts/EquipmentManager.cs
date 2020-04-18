@@ -6,9 +6,7 @@ using NesScripts.Tilemap;
 
 public class EquipmentManager : MonoBehaviour
 {
-
     public List<GameObject> availableEquipment;
-
     protected List<GameObject> placedEquipment;
 
     // Start is called before the first frame update
@@ -43,7 +41,9 @@ public class EquipmentManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && hover) {
             Vector3 position = hover.gameObject.transform.position;
-            placedEquipment.Add(Instantiate(availableEquipment[0], hover.gameObject.transform));
+            
+            gameObject.GetComponent<EquipmentUI>().CreateUIFromAvailableEquipmentAndPosition(Input.mousePosition, availableEquipment);
+            //placedEquipment.Add(Instantiate(availableEquipment[0], hover.gameObject.transform));
         }
     }
 
