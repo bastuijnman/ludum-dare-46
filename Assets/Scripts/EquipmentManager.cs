@@ -45,7 +45,7 @@ public class EquipmentManager : MonoBehaviour
          */
         bool isUIEnabled = gameObject.GetComponent<EquipmentUI>().IsUIEnabled();
         if (Input.GetMouseButtonDown(0) && hover && !isUIEnabled) {
-            gameObject.GetComponent<EquipmentUI>().CreateUIFromAvailableEquipmentAndPosition(Input.mousePosition, availableEquipment);
+            gameObject.GetComponent<EquipmentUI>().ShowCreateUIFromAvailableEquipmentAndPosition(Input.mousePosition, availableEquipment);
         }
     }
 
