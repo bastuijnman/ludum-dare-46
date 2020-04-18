@@ -39,7 +39,8 @@ namespace NesScripts.Tilemap
 		/// </summary>
 		/// <value>The front part for this tile. Note: will be cloned, not used directly.</value>
 		override public GameObject GetFrontPart(Tile self, Tile neighbor) {
-			return (GameObject)Resources.Load(WallResourcePath, typeof(GameObject));
+			return null;
+			//return (GameObject)Resources.Load(WallResourcePath, typeof(GameObject));
 		}
 
 		/// <summary>
@@ -51,7 +52,8 @@ namespace NesScripts.Tilemap
 		/// </summary>
 		/// <value>The back part for this tile. Note: will be cloned, not used directly.</value>
 		override public GameObject GetBackPart(Tile self, Tile neighbor) {
-			return (GameObject)Resources.Load(WallResourcePath, typeof(GameObject));
+			return null;
+			//return (GameObject)Resources.Load(WallResourcePath, typeof(GameObject));
 		}
 
 		/// <summary>
@@ -63,7 +65,8 @@ namespace NesScripts.Tilemap
 		/// </summary>
 		/// <value>The left part for this tile. Note: will be cloned, not used directly.</value>
 		override public GameObject GetLeftPart(Tile self, Tile neighbor) {
-			return (GameObject)Resources.Load(WallResourcePath, typeof(GameObject));
+			return null;
+			//return (GameObject)Resources.Load(WallResourcePath, typeof(GameObject));
 		}
 
 		/// <summary>
@@ -75,7 +78,8 @@ namespace NesScripts.Tilemap
 		/// </summary>
 		/// <value>The right part for this tile. Note: will be cloned, not used directly.</value>
 		override public GameObject GetRightPart(Tile self, Tile neighbor) {
-			return (GameObject)Resources.Load(WallResourcePath, typeof(GameObject));
+			return null;
+			//return (GameObject)Resources.Load(WallResourcePath, typeof(GameObject));
 		}
 	}
 }

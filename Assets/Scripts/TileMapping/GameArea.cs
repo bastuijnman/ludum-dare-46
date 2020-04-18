@@ -49,6 +49,21 @@ namespace NesScripts.Tilemap
 			CreateLoadingZone(new Vector2 (0, 0), new Vector2 (119, 50));
 			CreateBrewingZone(new Vector2 (0, 50), new Vector2 (119, 100));
 			CreatePackagingZone(new Vector2 (0, 100), new Vector2 (119, 150));
+
+			DecorateGameArea();
+
+		}
+
+		public void DecorateGameArea()
+		{
+			//Add wall strips to seperate zones
+			AddSeperators();
+		}
+
+		public void AddSeperators()
+		{
+			GameObject prefab = getWallResource("Walls/BrewingWall");
+			PlaceObjectOverRange(prefab, new Vector2 (0, 49), new Vector2 (120, 50));
 		}
 
 		public void CreateLoadingZone(Vector2 startPosition, Vector2 endPosition)
@@ -87,12 +102,50 @@ namespace NesScripts.Tilemap
 			}
 		}
 
+		private void PlaceObjectOverRange(GameObject gameObject, Vector2 startPosition, Vector2 endPosition)
+		{
+			// create the tilemap
+			for (float i = startPosition.x; i < endPosition.x; ++i) {
+				for (float j = startPosition.y; j < endPosition.y; ++j) {
+					// set the tile
+					PlaceObject(gameObject, new Vector2 (i, j));
+				}
+			}
+		}
+
+		public void PlaceObject(GameObject gameObject, Vector2 index)
+		{
+			//get tile game object
+			Tile gameTile = GetTile(index);
+			if (gameTile == null) {
+				return;
+			}
+			
+			float gameTileTop = gameTile.gameObject.transform.position.y + gameTile.gameObject.transform.lossyScale.y/2;
+
+			Vector3 blockCentre = new Vector3(gameTile.gameObject.transform.position.x, gameTileTop + gameObject.transform.lossyScale.y/2, gameTile.gameObject.transform.position.z);
+			Instantiate(gameObject, blockCentre, Quaternion.identity);
+		}
+
+
+		private GameObject getWallResource(string path)
+		{
+			GameObject prefab = (Resources.Load(path) as GameObject);
+
+			if (prefab == null) {
+				throw new UnityException ("You must set a wall prefab when creating empty tilemap!");
+			}
+
+
+			return prefab;
+		}
+
 		private GameObject getTileResource(string path)
 		{
 			GameObject prefab = (Resources.Load(path) as GameObject);
 
 			if (prefab == null) {
-				throw new UnityException ("You must set a default tile prefab when creating empty tilemap!");
+				throw new UnityException ("You must set a tile prefab when creating empty tilemap!");
 			}
 
 			// make sure tile prototype got Tile component

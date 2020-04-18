@@ -102,12 +102,13 @@ namespace NesScripts.Tilemap
 		/// <param name="prefab">Prefab to add.</param>
 		/// <param name="rotateY">Rotate new part on Y axis.</param>
 		/// <returns>>Newly created instance.</returns>
-		private GameObject AddPart(GameObject prefab, float rotateY = 0)
+		private GameObject AddPart(GameObject prefab, float rotateY = 0, float elevation = 5)
 		{
 			GameObject newPart = GameObject.Instantiate (prefab) as GameObject;
 			newPart.transform.parent = gameObject.transform;
 			newPart.transform.localRotation = Quaternion.Euler(new Vector3 (0, rotateY, 0));
-			newPart.transform.localPosition = Vector3.zero;
+			newPart.transform.localPosition = new Vector3(newPart.transform.position.x, elevation, newPart.transform.position.z);
+
 			_parts.Add (newPart);
 			return newPart;
 		}

@@ -28,7 +28,7 @@ namespace NesScripts.Tilemap
 		/// <summary>
 		/// The path of the prefab we use for walls for this tile type (under Resources folder).
 		/// </summary>
-		virtual protected string WallResourcePath { get { return "Tiles/BrewingZoneTile"; } }
+		virtual protected string WallResourcePath { get { return "Walls/BrewingWall"; } }
 
 		/// <summary>
 		/// When a tile is built and its front (positive Z) neighbor is of a different type, this function will be called.
@@ -39,7 +39,8 @@ namespace NesScripts.Tilemap
 		/// </summary>
 		/// <value>The front part for this tile. Note: will be cloned, not used directly.</value>
 		override public GameObject GetFrontPart(Tile self, Tile neighbor) {
-			return (GameObject)Resources.Load(WallResourcePath, typeof(GameObject));
+			return null;
+			//return (GameObject)Resources.Load(WallResourcePath, typeof(GameObject));
 		}
 
 		/// <summary>
@@ -51,7 +52,11 @@ namespace NesScripts.Tilemap
 		/// </summary>
 		/// <value>The back part for this tile. Note: will be cloned, not used directly.</value>
 		override public GameObject GetBackPart(Tile self, Tile neighbor) {
-			return (GameObject)Resources.Load(WallResourcePath, typeof(GameObject));
+			//GameObject wallPart = (GameObject)Resources.Load(WallResourcePath, typeof(GameObject));
+			
+			//return wallPart;
+
+			return null;
 		}
 
 		/// <summary>
@@ -63,7 +68,8 @@ namespace NesScripts.Tilemap
 		/// </summary>
 		/// <value>The left part for this tile. Note: will be cloned, not used directly.</value>
 		override public GameObject GetLeftPart(Tile self, Tile neighbor) {
-			return (GameObject)Resources.Load(WallResourcePath, typeof(GameObject));
+			//return (GameObject)Resources.Load(WallResourcePath, typeof(GameObject));
+			return null;
 		}
 
 		/// <summary>
@@ -75,7 +81,8 @@ namespace NesScripts.Tilemap
 		/// </summary>
 		/// <value>The right part for this tile. Note: will be cloned, not used directly.</value>
 		override public GameObject GetRightPart(Tile self, Tile neighbor) {
-			return (GameObject)Resources.Load(WallResourcePath, typeof(GameObject));
+			//return (GameObject)Resources.Load(WallResourcePath, typeof(GameObject));
+			return null;
 		}
 	}
 }

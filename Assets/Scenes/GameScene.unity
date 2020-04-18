@@ -193,10 +193,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58fb3b7b80bdb4b1780067f14e7cb02d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultTilePrefab: {fileID: 0}
   Width: 100
   Height: 100
-  CreateEmptyOnStart: 1
   TileSize: {x: 0, y: 0}
 --- !u!4 &654804084
 Transform:
