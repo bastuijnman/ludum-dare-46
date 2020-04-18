@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class EquipmentUI : MonoBehaviour
 {
@@ -13,6 +16,11 @@ public class EquipmentUI : MonoBehaviour
     void Start()
     {
         canvas.enabled = false;
+    }
+
+    public bool IsUIEnabled()
+    {
+        return canvas.enabled;
     }
 
     public void CreateUIFromAvailableEquipmentAndPosition(Vector2 position, List<GameObject> equipment)
@@ -30,9 +38,18 @@ public class EquipmentUI : MonoBehaviour
             GameObject button = Instantiate(radialButton);
             button.transform.SetParent(canvas.transform);
             button.transform.position = position + (new Vector2(Mathf.Sin((angle * i) * Mathf.Deg2Rad), Mathf.Cos((angle * i) * Mathf.Deg2Rad)) * radius);
+            button.GetComponent<Button>().onClick.AddListener(OnButtonClick(equipment.ElementAt(i)));
         }
 
         canvas.enabled = true;
+    }
+
+    private UnityAction OnButtonClick(GameObject equipment)
+    {
+        return () => { 
+            gameObject.GetComponent<EquipmentManager>().AddEquipment(equipment); 
+            canvas.enabled = false;
+        };
     }
 
     // Update is called once per frame

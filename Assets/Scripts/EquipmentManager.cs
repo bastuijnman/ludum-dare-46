@@ -39,12 +39,16 @@ public class EquipmentManager : MonoBehaviour
             Debug.DrawLine(bl, tl, Color.red);
         }
 
-        if (Input.GetMouseButtonDown(0) && hover) {
-            Vector3 position = hover.gameObject.transform.position;
-            
+        bool isUIEnabled = gameObject.GetComponent<EquipmentUI>().IsUIEnabled();
+        if (Input.GetMouseButtonDown(0) && hover && !isUIEnabled) {
             gameObject.GetComponent<EquipmentUI>().CreateUIFromAvailableEquipmentAndPosition(Input.mousePosition, availableEquipment);
-            //placedEquipment.Add(Instantiate(availableEquipment[0], hover.gameObject.transform));
         }
+    }
+
+    public void AddEquipment(GameObject equipment)
+    {
+        Tile tile = FindHoveredTile();
+        Instantiate(equipment, tile.transform);
     }
 
     /// <summary>

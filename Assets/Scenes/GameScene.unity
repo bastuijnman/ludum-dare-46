@@ -167,8 +167,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   availableEquipment:
   - {fileID: 9011830346258697618, guid: ee11bdc1c412046f295e1addfc013f4e, type: 3}
-  - {fileID: 9011830346258697618, guid: ee11bdc1c412046f295e1addfc013f4e, type: 3}
-  - {fileID: 9011830346258697618, guid: ee11bdc1c412046f295e1addfc013f4e, type: 3}
+  - {fileID: -927199367670048503, guid: 55d9caf15eabd4c7e919fc7e93a87660, type: 3}
+  - {fileID: -927199367670048503, guid: b11ef90892d664d558f7b6f33042a310, type: 3}
 --- !u!114 &377637167
 MonoBehaviour:
   m_ObjectHideFlags: 0
