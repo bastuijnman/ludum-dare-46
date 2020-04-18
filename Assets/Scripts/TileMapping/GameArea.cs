@@ -14,10 +14,18 @@ namespace NesScripts.Tilemap
 	/// Represent a 3d tilemap, made of tile components.
 	/// Note: see Tile component for more info.
 	/// </summary>
-	public class GameArea : TileMap {
+	public class GameArea : MonoBehaviour {
 
 		// array of tiles
 		Tile[,] _tiles;
+
+
+		// tilemap width and height
+		public int Width = 100;
+		public int Height = 100;
+
+		// tile size (if 0, will be calculated on start based on tile renderers)
+		public Vector2 TileSize = new Vector2(0, 0);
 
 		/// <summary>
 		/// Creates new standard game area
@@ -41,33 +49,48 @@ namespace NesScripts.Tilemap
 			CreateLoadingZone(new Vector2 (0, 0), new Vector2 (119, 50));
 			CreateBrewingZone(new Vector2 (0, 50), new Vector2 (119, 100));
 			CreatePackagingZone(new Vector2 (0, 100), new Vector2 (119, 150));
+
+			DecorateGameArea();
+
+		}
+
+		public void DecorateGameArea()
+		{
+			//Add wall strips to seperate zones
+			AddSeperators();
+		}
+
+		public void AddSeperators()
+		{
+			GameObject prefab = getWallResource("Walls/BrewingWall");
+			PlaceObjectOverRange(prefab, new Vector2 (0, 49), new Vector2 (120, 50));
 		}
 
 		public void CreateLoadingZone(Vector2 startPosition, Vector2 endPosition)
 		{
 			GameObject prefab = getTileResource("Tiles/LoadingZoneTile");
-			SetTileRange(prefab, startPosition, endPosition);
+			SetTileRange(prefab, startPosition, endPosition, "LoadingTileType");
 		}
 
 		public void CreateBrewingZone(Vector2 startPosition, Vector2 endPosition)
 		{
 			GameObject prefab = getTileResource("Tiles/BrewingZoneTile");
-			SetTileRange(prefab, startPosition, endPosition);
+			SetTileRange(prefab, startPosition, endPosition, "BrewingTileType");
 		}
 
 		public void CreatePackagingZone(Vector2 startPosition, Vector2 endPosition)
 		{
 			GameObject prefab = getTileResource("Tiles/PackagingZoneTile");
-			SetTileRange(prefab, startPosition, endPosition);
+			SetTileRange(prefab, startPosition, endPosition, "PackagingTileType");
 		}
 
-		private void SetTileRange(GameObject TileObject, Vector2 startPosition, Vector2 endPosition)
+		private void SetTileRange(GameObject TileObject, Vector2 startPosition, Vector2 endPosition, string tileTypeName)
 		{
 			// create the tilemap
 			for (float i = startPosition.x; i < endPosition.x; ++i) {
 				for (float j = startPosition.y; j < endPosition.y; ++j) {
 					// set the tile
-					SetTile(TileObject, new Vector2 (i, j), false);
+					SetTile(TileObject, new Vector2 (i, j), tileTypeName, false);
 				}
 			}
 
@@ -79,12 +102,50 @@ namespace NesScripts.Tilemap
 			}
 		}
 
+		private void PlaceObjectOverRange(GameObject gameObject, Vector2 startPosition, Vector2 endPosition)
+		{
+			// create the tilemap
+			for (float i = startPosition.x; i < endPosition.x; ++i) {
+				for (float j = startPosition.y; j < endPosition.y; ++j) {
+					// set the tile
+					PlaceObject(gameObject, new Vector2 (i, j));
+				}
+			}
+		}
+
+		public void PlaceObject(GameObject gameObject, Vector2 index)
+		{
+			//get tile game object
+			Tile gameTile = GetTile(index);
+			if (gameTile == null) {
+				return;
+			}
+			
+			float gameTileTop = gameTile.gameObject.transform.position.y + gameTile.gameObject.transform.lossyScale.y/2;
+
+			Vector3 blockCentre = new Vector3(gameTile.gameObject.transform.position.x, gameTileTop + gameObject.transform.lossyScale.y/2, gameTile.gameObject.transform.position.z);
+			Instantiate(gameObject, blockCentre, Quaternion.identity);
+		}
+
+
+		private GameObject getWallResource(string path)
+		{
+			GameObject prefab = (Resources.Load(path) as GameObject);
+
+			if (prefab == null) {
+				throw new UnityException ("You must set a wall prefab when creating empty tilemap!");
+			}
+
+
+			return prefab;
+		}
+
 		private GameObject getTileResource(string path)
 		{
 			GameObject prefab = (Resources.Load(path) as GameObject);
 
 			if (prefab == null) {
-				throw new UnityException ("You must set a default tile prefab when creating empty tilemap!");
+				throw new UnityException ("You must set a tile prefab when creating empty tilemap!");
 			}
 
 			// make sure tile prototype got Tile component
@@ -115,7 +176,8 @@ namespace NesScripts.Tilemap
 		/// <param name="tilePrefab">Tile to set. May be null to remove the tile without substitute.</param>
 		/// <param name="index">Index to put this tile.</param>
 		/// <param name="build">If true, will also build the tile and its immediate neighbors.</param>
-		public void SetTile(GameObject tilePrefab, Vector2 index, bool build = true)
+		/// <param name="type">Type so we can create tthe correct tile</param>
+		public void SetTile(GameObject tilePrefab, Vector2 index, string tileTypeName, bool build = true)
 		{
 			// destroy previous tile, if exists
 			if (_tiles [(int)index.x, (int)index.y] != null) {
@@ -149,7 +211,7 @@ namespace NesScripts.Tilemap
 
 			// init tile component
 			Tile tileComponent = tile.GetComponent<Tile>();
-			tileComponent.Init (this, index);
+			tileComponent.Init (this, index, tileTypeName);
 
 			// add to tiles array
 			_tiles[(int)index.x, (int)index.y] = tileComponent;
