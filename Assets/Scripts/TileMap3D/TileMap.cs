@@ -169,7 +169,7 @@ namespace NesScripts.Tilemap
 
 			// create empty map on start
 			if (CreateEmptyOnStart) {
-				CreateEmpty (Width, Height, DefaultTilePrefab);
+				CreateEmpty(Width, Height, DefaultTilePrefab);
 			}
 		}
 	}
