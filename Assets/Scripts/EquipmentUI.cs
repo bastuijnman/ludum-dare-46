@@ -60,7 +60,7 @@ public class EquipmentUI : MonoBehaviour
         }
 
         // TODO Connect button
-        if (equipment.CanAcceptConnection()) {
+        if (equipment.CanAddConnection()) {
             GameObject button = Instantiate(radialButton, canvas.transform);
             buttons.Add(button);
         }
