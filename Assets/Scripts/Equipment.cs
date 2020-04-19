@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +10,18 @@ public class Equipment : MonoBehaviour
     /// </summary>
     public float cost;
 
+    public float maxUnprocessedAmount = 100f;
+
+    public float maxProcessedAmount = 100f;
+
+    //Ticks are every 200ms, so to set this value in seconds multiply your number by 5
     public float processTime;
+
+    //This is the amount of resources the equipment will process per tick.
+    //To set this value in amount/second divide your number by 5
+    public float processAmount;
+    
+    public float outputAmount;
 
     /// <summary>
     /// The max number of output connections this piece of equipment can have.
@@ -23,11 +34,25 @@ public class Equipment : MonoBehaviour
     /// </summary>
     public GameObject upgrade;
 
+    public bool IsFinishedProcessing = true;
+
     /// <summary>
     /// Holds a list of the output connections for this piece of equipment. Output of the equipment
     /// from the process should be sent to the input of these connections.
     /// </summary>
     protected List<Equipment> connections;
+
+    public bool isPlaced = false;
+
+    public Resource unprocessedResource = new Resource {
+            name = "test",
+            amount = 10f
+        };
+
+    public Resource processedResource = new Resource {
+            name = "test",
+            amount = 10f
+        };
 
     // Start is called before the first frame update
     void Start()
@@ -87,21 +112,66 @@ public class Equipment : MonoBehaviour
         return connections.Count < maxOutputConnections;
     }
 
-    public bool IsFinishedProcessing()
+    public void SendResource(Equipment recipient, float amount)
     {
-        return false;
+        recipient.IngestResource(amount);
     }
 
-    public Resource GetProcessedResource()
+    public void IngestResource(float amount)
     {
-        return new Resource {
-            name = "test",
-            amount = 10
-        };
+        unprocessedResource.amount = unprocessedResource.amount + amount;
+        if (unprocessedResource.amount > maxUnprocessedAmount) {
+            unprocessedResource.amount = maxUnprocessedAmount;
+        }
     }
 
-    public void IngestResource(Resource resource)
+    private void OnTick(object sender, ResourceFlow.OnTickEventArgs e) {
+        if (!IsFinishedProcessing) {
+            HandleProcessing();
+        }
+    }
+
+    private void HandleProcessing()
     {
+        if (!isPlaced) {//never process unplaced equipment
+            return;
+        }
+
+        //conditions for starting processing
+        //the amount of unprocessed resource is == to max
+        //the amount of processed resource is == to 0
+        if (IsFinishedProcessing && unprocessedResource.amount == maxUnprocessedAmount && processedResource.amount == 0f) {
+            IsFinishedProcessing = false;
+
+            processResources();
+        }
+
+        //conditions for continuing processing
+        //isnt finished processing
+        if (!IsFinishedProcessing) { //continue processing
+            //decrement unprocessed amount by proceessAmount
+            //increment processed amount by processAmount
+            processResources();
+        }
         
+        //the only thing that would stop us processing this tick are;
+        //if the processedResource amount is == to max
+        if (processedResource.amount == maxProcessedAmount) {
+            IsFinishedProcessing = true;
+        }
+    }
+
+    private void processResources()
+    {
+        unprocessedResource.amount = unprocessedResource.amount - processAmount;
+        processedResource.amount = processedResource.amount + processAmount;
+
+        if (unprocessedResource.amount < 0f) {
+            unprocessedResource.amount = 0f;
+        }
+
+        if (processedResource.amount > maxProcessedAmount) {
+            processedResource.amount = maxProcessedAmount;
+        }
     }
 }

@@ -5,6 +5,8 @@ public class Resource
 
     public string name;
 
-    public int amount;
+    public float amount;
+
+    public string type;
 
 }

@@ -89,6 +89,7 @@ public class EquipmentManager : MonoBehaviour
 
 		GameObject placedObject = (GameObject) Instantiate(equipment, blockCentre, equipment.transform.rotation, tile.transform);
         placedObject.name = "equipment";
+        placedObject.GetComponent<Equipment>().isPlaced = true;
         placedEquipment.Add(placedObject);
     }
 
