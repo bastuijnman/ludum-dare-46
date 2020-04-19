@@ -23,4 +23,9 @@ public class EquipmentSelectionGlow : MonoBehaviour
         Color finalColor = baseColor * Mathf.LinearToGammaSpace (emission);
         mat.SetColor ("_EmissionColor", finalColor);
     }
+
+    void OnDestroy()
+    {
+        mat.DisableKeyword("_EMISSION");
+    }
 }

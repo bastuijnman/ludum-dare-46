@@ -8,12 +8,14 @@ using NesScripts.Tilemap;
 public class EquipmentManager : MonoBehaviour
 {
     public List<GameObject> availableEquipment;
-    protected List<GameObject> placedEquipment = new List<GameObject>();
+    protected List<GameObject> placedEquipment;
+
+    protected GameObject activeConnector;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        placedEquipment = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -48,7 +50,20 @@ public class EquipmentManager : MonoBehaviour
 
             Transform equipment = hover.transform.Find("equipment");
 
-            if (equipment ) {
+            /* 
+             * Handle equipment connection when in connection mode and equipment is found
+             */
+            if (activeConnector && equipment) {
+                activeConnector
+                    .GetComponent<Equipment>()
+                    .AddConnection(equipment.gameObject.GetComponent<Equipment>());
+                LeaveConnectionMode();
+
+                // No need to perform any other action
+                return;
+            }
+
+            if (equipment) {
                 gameObject
                     .GetComponent<EquipmentUI>()
                     .ShowUpdateUIFromEquipmentAndPosition(Input.mousePosition, equipment.gameObject);
@@ -82,11 +97,18 @@ public class EquipmentManager : MonoBehaviour
     public void EnterConnectionMode(GameObject equipment)
     {
         placedEquipment.ForEach(item => {
-
             if (item != equipment) {
                 item.AddComponent<EquipmentSelectionGlow>();
             }
+        });
+        activeConnector = equipment;
+    }
 
+    protected void LeaveConnectionMode()
+    {
+        activeConnector = null;
+        placedEquipment.ForEach(item => {
+            Destroy(item.GetComponent<EquipmentSelectionGlow>());
         });
     }
 
