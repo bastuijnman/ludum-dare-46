@@ -46,10 +46,16 @@ public class EquipmentManager : MonoBehaviour
         bool isUIEnabled = gameObject.GetComponent<EquipmentUI>().IsUIEnabled();
         if (Input.GetMouseButtonDown(0) && hover && !isUIEnabled) {
 
-            bool tileHasEquipment = hover.transform.Find("equipment") != null;
+            Transform equipment = hover.transform.Find("equipment");
 
-            if (!tileHasEquipment) {
-                gameObject.GetComponent<EquipmentUI>().ShowCreateUIFromAvailableEquipmentAndPosition(Input.mousePosition, availableEquipment);
+            if (equipment ) {
+                gameObject
+                    .GetComponent<EquipmentUI>()
+                    .ShowUpdateUIFromEquipmentAndPosition(Input.mousePosition, equipment.gameObject);
+            } else {
+                gameObject
+                    .GetComponent<EquipmentUI>()
+                    .ShowCreateUIFromAvailableEquipmentAndPosition(Input.mousePosition, availableEquipment);
             }
         }
     }

@@ -25,32 +25,34 @@ public class EquipmentUI : MonoBehaviour
 
     public void ShowCreateUIFromAvailableEquipmentAndPosition(Vector2 position, List<GameObject> equipment)
     {
-
         // Cleanup any previous menu
-        foreach (Transform child in canvas.transform) {
-            Destroy(child.gameObject);
-        }
+        Cleanup();
 
-        float angle = 360.0f / equipment.Count;
-        float radius = 50.0f; // Radius is in pixels
-
+        List<GameObject> buttons = new List<GameObject>();
         for (int i = 0; i < equipment.Count; i++) {
-            GameObject button = Instantiate(radialButton);
-            button.transform.SetParent(canvas.transform);
-            button.transform.position = position + (new Vector2(Mathf.Sin((angle * i) * Mathf.Deg2Rad), Mathf.Cos((angle * i) * Mathf.Deg2Rad)) * radius);
+            GameObject button = Instantiate(radialButton, canvas.transform);
+            //button.transform.SetParent(canvas.transform);
             button.GetComponent<Button>().onClick.AddListener(OnCreateButtonClick(equipment.ElementAt(i)));
+            buttons.Add(button);
         }
+        SetRadialButtonPositions(buttons.ToArray(), position);
 
         canvas.enabled = true;
     }
 
     public void ShowUpdateUIFromEquipmentAndPosition(Vector2 position, GameObject equipmentObject)
     {
-        Equipment equipment = equipmentObject.GetComponent<Equipment>();
+        // Cleanup any previous menu
+        Cleanup();
 
+        // Check if we have actual equipment
+        Equipment equipment = equipmentObject.GetComponent<Equipment>();
         if (!equipment) {
+            Debug.Log("NO EQUIPMENT");
             return;
         }
+
+        List<GameObject> buttons = new List<GameObject>();
 
         // TODO: Upgrade button
         if (equipment.upgrade) {
@@ -59,16 +61,31 @@ public class EquipmentUI : MonoBehaviour
 
         // TODO Connect button
         if (equipment.CanAcceptConnection()) {
-
+            GameObject button = Instantiate(radialButton, canvas.transform);
+            buttons.Add(button);
         }
 
+        SetRadialButtonPositions(buttons.ToArray(), position);
+
+        canvas.enabled = true;
+    }
+
+    protected void SetRadialButtonPositions(GameObject[] buttons, Vector2 position)
+    {
+        float angle = 360.0f / buttons.Length;
+        float radius = 50.0f; // Radius is in pixels
+
+        for (int i = 0; i < buttons.Length; i++) {
+            GameObject button = buttons[i];
+            button.transform.position = position + (new Vector2(Mathf.Sin((angle * i) * Mathf.Deg2Rad), Mathf.Cos((angle * i) * Mathf.Deg2Rad)) * radius);
+        }
     }
 
     /// <summary>
     /// Handles radial button click, will add the assigned equipment to the
     /// equipment manager.
     /// </summary>
-    private UnityAction OnCreateButtonClick(GameObject equipment)
+    protected UnityAction OnCreateButtonClick(GameObject equipment)
     {
         return () => {
             gameObject.GetComponent<EquipmentManager>().AddEquipment(equipment); 
@@ -76,8 +93,10 @@ public class EquipmentUI : MonoBehaviour
         };
     }
 
-    // Update is called once per frame
-    void Update()
+    protected void Cleanup()
     {
+        foreach (Transform child in canvas.transform) {
+            Destroy(child.gameObject);
+        }
     }
 }

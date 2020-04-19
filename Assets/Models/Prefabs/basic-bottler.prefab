@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 1
-  maxOutputConnections: 0
+  maxOutputConnections: 1
   upgrade: {fileID: 0}
 --- !u!1001 &7685629656543189809
 PrefabInstance:
