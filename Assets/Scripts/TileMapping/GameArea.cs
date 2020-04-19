@@ -19,9 +19,8 @@ namespace NesScripts.Tilemap
 		// array of tiles
 		Tile[,] _tiles;
 
-
 		// tilemap width and height
-		public int Width = 100;
+		public int Width = 60;
 		public int Height = 100;
 
 		// tile size (if 0, will be calculated on start based on tile renderers)
@@ -35,10 +34,10 @@ namespace NesScripts.Tilemap
 		public void CreateGameArea()
 		{
 			// set params
-			Width = 120;
-			Height = 200;
-			TileSize.x = 10;
-			TileSize.y = 10;
+			Width = 30;
+			Height = 50;
+			TileSize.x = 5;
+			TileSize.y = 5;
 		
 			// if there's a previous tilemap, destroy it first
 			DestroyTilemap();
@@ -46,9 +45,9 @@ namespace NesScripts.Tilemap
 			// create tiles array
 			_tiles = new Tile[Width, Height];
 
-			CreateLoadingZone(new Vector2 (0, 0), new Vector2 (119, 50));
-			CreateBrewingZone(new Vector2 (0, 50), new Vector2 (119, 100));
-			CreatePackagingZone(new Vector2 (0, 100), new Vector2 (119, 150));
+			CreateLoadingZone(new Vector2 (0, 0), new Vector2 (30, 15));
+			CreateBrewingZone(new Vector2 (0, 15), new Vector2 (30, 30));
+			CreatePackagingZone(new Vector2 (0, 30), new Vector2 (30, 45));
 
 			DecorateGameArea();
 
@@ -63,7 +62,7 @@ namespace NesScripts.Tilemap
 		public void AddSeperators()
 		{
 			GameObject prefab = getWallResource("Walls/BrewingWall");
-			PlaceObjectOverRange(prefab, new Vector2 (0, 49), new Vector2 (120, 50));
+			PlaceObjectOverRange(prefab, new Vector2 (0, 14), new Vector2 (30, 15));
 		}
 
 		public void CreateLoadingZone(Vector2 startPosition, Vector2 endPosition)
@@ -120,7 +119,7 @@ namespace NesScripts.Tilemap
 			if (gameTile == null) {
 				return;
 			}
-			
+
 			float gameTileTop = gameTile.gameObject.transform.position.y + gameTile.gameObject.transform.lossyScale.y/2;
 
 			Vector3 blockCentre = new Vector3(gameTile.gameObject.transform.position.x, gameTileTop + gameObject.transform.lossyScale.y/2, gameTile.gameObject.transform.position.z);
@@ -131,7 +130,7 @@ namespace NesScripts.Tilemap
 		private GameObject getWallResource(string path)
 		{
 			GameObject prefab = (Resources.Load(path) as GameObject);
-
+		
 			if (prefab == null) {
 				throw new UnityException ("You must set a wall prefab when creating empty tilemap!");
 			}

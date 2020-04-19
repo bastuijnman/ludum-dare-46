@@ -23,7 +23,7 @@ namespace NesScripts.Tilemap
 		/// Only if true will try to build other tile parts, using the GetXxxPart() functions.
 		/// </summary>
 		/// <value>true</value>
-		override public bool UseDynamicPartsBuild { get { return true; } }
+		override public bool UseDynamicPartsBuild { get { return false; } }
 
 		/// <summary>
 		/// The path of the prefab we use for walls for this tile type (under Resources folder).
