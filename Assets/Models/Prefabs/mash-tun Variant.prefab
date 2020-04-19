@@ -13,15 +13,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 1
-  maxUnprocessedAmount: 10
+  maxUnprocessedAmount: 100
   maxProcessedAmount: 100
   processTime: 5
   processAmount: 1
   outputAmount: 1
   maxOutputConnections: 1
   upgrade: {fileID: 0}
-  IsFinishedProcessing: 0
+  IsFinishedProcessing: 1
   isPlaced: 0
+  startingAmount: 0
+  resourceType: crushed_grain
+  outputType: mash
 --- !u!1001 &1386542463051312503
 PrefabInstance:
   m_ObjectHideFlags: 0

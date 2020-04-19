@@ -134,6 +134,13 @@ public class Equipment : MonoBehaviour
 
     public void SendResource(Equipment recipient, float amount)
     {
+        float newAmount = processedResource.amount - processAmount;
+        if (newAmount < 0f) {
+            newAmount = 0f;
+        }
+
+        processedResource.amount = newAmount;
+
         recipient.IngestResource(amount);
     }
 
@@ -150,9 +157,7 @@ public class Equipment : MonoBehaviour
         Debug.Log("ticky tick");
         Debug.Log(IsFinishedProcessing);
 
-        if (IsFinishedProcessing != true) {
-            HandleProcessing();
-        }
+        HandleProcessing();
         ShowDebugInfo();
     }
 
@@ -186,7 +191,6 @@ public class Equipment : MonoBehaviour
         //the amount of processed resource is == to 0
         if (IsFinishedProcessing && GetUnprocessedResource().amount == maxUnprocessedAmount && GetProcessedResource().amount == 0f) {
             IsFinishedProcessing = false;
-            processResources();
         }
 
         //conditions for continuing processing
