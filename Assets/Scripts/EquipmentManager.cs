@@ -79,6 +79,17 @@ public class EquipmentManager : MonoBehaviour
         placedEquipment.Add(placedObject);
     }
 
+    public void EnterConnectionMode(GameObject equipment)
+    {
+        placedEquipment.ForEach(item => {
+
+            if (item != equipment) {
+                item.AddComponent<EquipmentSelectionGlow>();
+            }
+
+        });
+    }
+
     /// <summary>
     /// Tries to find a tile that the user is hovering over
     /// </summary>

@@ -48,7 +48,6 @@ public class EquipmentUI : MonoBehaviour
         // Check if we have actual equipment
         Equipment equipment = equipmentObject.GetComponent<Equipment>();
         if (!equipment) {
-            Debug.Log("NO EQUIPMENT");
             return;
         }
 
@@ -62,6 +61,7 @@ public class EquipmentUI : MonoBehaviour
         // TODO Connect button
         if (equipment.CanAddConnection()) {
             GameObject button = Instantiate(radialButton, canvas.transform);
+            button.GetComponent<Button>().onClick.AddListener(OnConnectionButtonClick(equipmentObject));
             buttons.Add(button);
         }
 
@@ -89,6 +89,14 @@ public class EquipmentUI : MonoBehaviour
     {
         return () => {
             gameObject.GetComponent<EquipmentManager>().AddEquipment(equipment); 
+            canvas.enabled = false;
+        };
+    }
+
+    protected UnityAction OnConnectionButtonClick(GameObject equipment)
+    {
+        return () => {
+            gameObject.GetComponent<EquipmentManager>().EnterConnectionMode(equipment);
             canvas.enabled = false;
         };
     }
