@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8474372821565869613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6925427989205513342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1b8678e8d37c46c88d60ff21c7494c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 1
+  processTime: 5
+  maxOutputConnections: 1
+  upgrade: {fileID: 0}
 --- !u!1001 &1386542463051312503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -65,7 +81,13 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 9eada8c2437e846ebbd3e687710ba781,
         type: 3}
       propertyPath: m_Name
-      value: mash-tun
+      value: mash-tun Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9eada8c2437e846ebbd3e687710ba781, type: 3}
+--- !u!1 &6925427989205513342 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 9eada8c2437e846ebbd3e687710ba781,
+    type: 3}
+  m_PrefabInstance: {fileID: 1386542463051312503}
+  m_PrefabAsset: {fileID: 0}

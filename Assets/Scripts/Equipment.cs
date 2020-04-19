@@ -10,6 +10,8 @@ public class Equipment : MonoBehaviour
     /// </summary>
     public float cost;
 
+    public float processTime;
+
     /// <summary>
     /// The max number of output connections this piece of equipment can have.
     /// Set in the editor.
@@ -36,6 +38,12 @@ public class Equipment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        /*
+         * HERE YE HERE YE, THIS MIGHTY PIECE OF CODE BE JUST FOR DEBUGGING
+         * PURPOSES AND SHOULD FIND A WORTHY REPLACEMENT IN THE FUTURE AS
+         * IT HAS BEEN FORETOLD BY THE GODS.
+         */
         Vector3 position = transform.position;
         connections.ForEach(connection => {
             Debug.DrawLine(position, connection.gameObject.transform.position, Color.green);

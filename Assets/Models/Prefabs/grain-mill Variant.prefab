@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &6485316696247010327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3353531165944881994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1b8678e8d37c46c88d60ff21c7494c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 1
+  processTime: 5
+  maxOutputConnections: 1
+  upgrade: {fileID: 0}
 --- !u!1001 &6749716913965234755
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -65,7 +81,13 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 55d9caf15eabd4c7e919fc7e93a87660,
         type: 3}
       propertyPath: m_Name
-      value: grain-mill
+      value: grain-mill Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55d9caf15eabd4c7e919fc7e93a87660, type: 3}
+--- !u!1 &3353531165944881994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 55d9caf15eabd4c7e919fc7e93a87660,
+    type: 3}
+  m_PrefabInstance: {fileID: 6749716913965234755}
+  m_PrefabAsset: {fileID: 0}
