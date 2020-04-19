@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableEquipment:
-  - {fileID: 9011830346258697618, guid: ee11bdc1c412046f295e1addfc013f4e, type: 3}
+  - {fileID: 1840066131436077624, guid: 6b35e8adc6dbc45688b9b0f426f71fda, type: 3}
   - {fileID: 5953573132051002513, guid: 4974eb8adb39a46d6a1a9323a2d99f88, type: 3}
   - {fileID: 5613402323260711864, guid: adfc77060e62c4649961ce93ff1f2923, type: 3}
 --- !u!114 &377637167
@@ -471,7 +471,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.28778607, y: -0, z: -0, w: 0.95769477}
-  m_LocalPosition: {x: 577, y: 26, z: 331}
+  m_LocalPosition: {x: 65.7, y: 26.2, z: -17.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
