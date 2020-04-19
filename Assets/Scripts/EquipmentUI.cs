@@ -59,7 +59,7 @@ public class EquipmentUI : MonoBehaviour
 
         // TODO Connect button
         if (equipment.CanAcceptConnection()) {
-            
+
         }
 
     }
@@ -70,7 +70,7 @@ public class EquipmentUI : MonoBehaviour
     /// </summary>
     private UnityAction OnCreateButtonClick(GameObject equipment)
     {
-        return () => { 
+        return () => {
             gameObject.GetComponent<EquipmentManager>().AddEquipment(equipment); 
             canvas.enabled = false;
         };

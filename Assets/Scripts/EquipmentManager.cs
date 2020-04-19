@@ -45,7 +45,12 @@ public class EquipmentManager : MonoBehaviour
          */
         bool isUIEnabled = gameObject.GetComponent<EquipmentUI>().IsUIEnabled();
         if (Input.GetMouseButtonDown(0) && hover && !isUIEnabled) {
-            gameObject.GetComponent<EquipmentUI>().ShowCreateUIFromAvailableEquipmentAndPosition(Input.mousePosition, availableEquipment);
+
+            bool tileHasEquipment = hover.transform.Find("equipment") != null;
+
+            if (!tileHasEquipment) {
+                gameObject.GetComponent<EquipmentUI>().ShowCreateUIFromAvailableEquipmentAndPosition(Input.mousePosition, availableEquipment);
+            }
         }
     }
 
@@ -56,16 +61,16 @@ public class EquipmentManager : MonoBehaviour
     public void AddEquipment(GameObject equipment)
     {
         Tile tile = FindHoveredTile();
-        equipment.transform.parent = tile.transform.parent;
         
         //The idea here is that i get the height of the object from the mesh, then half it and add
         //it as an offset to the placement height so it's alayws flush with the floor.
         //The idea however, doesnt work. No clue where to go from here but things are all floaty.
         float equipmentHeight = equipment.GetComponent<MeshFilter>().sharedMesh.bounds.extents.y * 2;
 		Vector3 blockCentre = new Vector3(tile.gameObject.transform.position.x, tile.gameObject.transform.position.y + (equipmentHeight / 2), tile.gameObject.transform.position.z);
-        
-		GameObject placedObject = (GameObject) Instantiate(equipment, blockCentre, equipment.transform.rotation);
-        
+
+		GameObject placedObject = (GameObject) Instantiate(equipment, blockCentre, equipment.transform.rotation, tile.transform);
+        placedObject.name = "equipment";
+        placedEquipment.Add(placedObject);
     }
 
     /// <summary>
