@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using CodeMonkey;
 
 public class Equipment : MonoBehaviour
 {
-
     /// <summary>
     /// Defines the operational cost of the equipment, set in the editor.
     /// </summary>
     public float cost;
 
-    public float maxUnprocessedAmount = 100f;
+    public float maxUnprocessedAmount = 10f;
 
     public float maxProcessedAmount = 100f;
 
     //Ticks are every 200ms, so to set this value in seconds multiply your number by 5
-    public float processTime;
+    public float processTime = 15f;
 
     //This is the amount of resources the equipment will process per tick.
     //To set this value in amount/second divide your number by 5
-    public float processAmount;
+    public float processAmount = 0.2f;
     
-    public float outputAmount;
+    public float outputAmount = 1;
 
     /// <summary>
     /// The max number of output connections this piece of equipment can have.
@@ -34,7 +34,7 @@ public class Equipment : MonoBehaviour
     /// </summary>
     public GameObject upgrade;
 
-    public bool IsFinishedProcessing = true;
+    public bool IsFinishedProcessing = false;
 
     /// <summary>
     /// Holds a list of the output connections for this piece of equipment. Output of the equipment
@@ -44,15 +44,35 @@ public class Equipment : MonoBehaviour
 
     public bool isPlaced = false;
 
-    public Resource unprocessedResource = new Resource {
-            name = "test",
-            amount = 10f
-        };
+    public Resource unprocessedResource;
+    public Resource processedResource;
 
-    public Resource processedResource = new Resource {
-            name = "test",
-            amount = 10f
-        };
+    public float startingAmount = 10f;
+
+    public string resourceType;
+
+    public string outputType;
+
+    public Equipment()
+    {
+        ResourceFlow.OnTick += OnTick;
+    }
+
+    public Resource GetProcessedResource() 
+    {
+        if (processedResource == null) {
+            processedResource = new Resource(outputType, 0f);
+        }
+        return processedResource;
+    }
+
+    public Resource GetUnprocessedResource() 
+    {
+        if (unprocessedResource == null) {
+            unprocessedResource = new Resource(resourceType, startingAmount);
+        }
+        return unprocessedResource;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -119,59 +139,78 @@ public class Equipment : MonoBehaviour
 
     public void IngestResource(float amount)
     {
-        unprocessedResource.amount = unprocessedResource.amount + amount;
-        if (unprocessedResource.amount > maxUnprocessedAmount) {
-            unprocessedResource.amount = maxUnprocessedAmount;
+        GetUnprocessedResource().amount = GetUnprocessedResource().amount + amount;
+        if (GetUnprocessedResource().amount > maxUnprocessedAmount) {
+            GetUnprocessedResource().amount = maxUnprocessedAmount;
         }
     }
 
     private void OnTick(object sender, ResourceFlow.OnTickEventArgs e) {
-        if (!IsFinishedProcessing) {
+        
+        Debug.Log("ticky tick");
+        Debug.Log(IsFinishedProcessing);
+
+        if (IsFinishedProcessing != true) {
             HandleProcessing();
         }
+        ShowDebugInfo();
     }
+
+    private void ShowDebugInfo()
+    {
+        string uText = GetUnprocessedResource().name + " " + GetUnprocessedResource().amount.ToString() + " " + GetProcessedResource().name + " " + GetProcessedResource().amount.ToString();
+        if (this != null) {
+            if (isPlaced) {
+                CMDebug.TextPopup(uText, this.transform.position);
+            }
+        }
+    }
+    
 
     private void HandleProcessing()
     {
-        if (!isPlaced) {//never process unplaced equipment
+        Debug.Log("processing");
+        if (isPlaced != true) {//never process unplaced equipment
+            Debug.Log("is placed is false");
             return;
+        }
+
+        //the only thing that would stop us processing this tick are;
+        //if the processedResource amount is == to max or if the unProcessed is empty
+        if (GetProcessedResource().amount == maxProcessedAmount || GetUnprocessedResource().amount == 0) {
+            IsFinishedProcessing = true;
         }
 
         //conditions for starting processing
         //the amount of unprocessed resource is == to max
         //the amount of processed resource is == to 0
-        if (IsFinishedProcessing && unprocessedResource.amount == maxUnprocessedAmount && processedResource.amount == 0f) {
+        if (IsFinishedProcessing && GetUnprocessedResource().amount == maxUnprocessedAmount && GetProcessedResource().amount == 0f) {
             IsFinishedProcessing = false;
-
             processResources();
         }
 
         //conditions for continuing processing
         //isnt finished processing
-        if (!IsFinishedProcessing) { //continue processing
+        if (IsFinishedProcessing != true) { //continue processing
             //decrement unprocessed amount by proceessAmount
             //increment processed amount by processAmount
             processResources();
         }
         
-        //the only thing that would stop us processing this tick are;
-        //if the processedResource amount is == to max
-        if (processedResource.amount == maxProcessedAmount) {
-            IsFinishedProcessing = true;
-        }
     }
 
     private void processResources()
     {
-        unprocessedResource.amount = unprocessedResource.amount - processAmount;
-        processedResource.amount = processedResource.amount + processAmount;
+        Debug.Log("processing");
+        GetUnprocessedResource().amount = GetUnprocessedResource().amount - processAmount;
+        GetProcessedResource().amount = GetProcessedResource().amount + processAmount;
 
-        if (unprocessedResource.amount < 0f) {
-            unprocessedResource.amount = 0f;
+        if (GetUnprocessedResource().amount < 0f) {
+            GetUnprocessedResource().amount = 0f;
         }
 
-        if (processedResource.amount > maxProcessedAmount) {
-            processedResource.amount = maxProcessedAmount;
+        if (GetProcessedResource().amount > maxProcessedAmount) {
+            GetProcessedResource().amount = maxProcessedAmount;
         }
     }
 }

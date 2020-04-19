@@ -11,7 +11,7 @@ public class ResourceFlow : MonoBehaviour
     
     public static event EventHandler<OnTickEventArgs> OnTick;
 
-    private const float MAX_TICK_DURATION = 0.2f;
+    private const float MAX_TICK_DURATION = .2f;
 
     private int tick;
 
@@ -43,7 +43,6 @@ public class ResourceFlow : MonoBehaviour
             if (OnTick != null) {
                 OnTick(this, new OnTickEventArgs {tick = tick});
             }
-
             //handle the flow of resources between equipment
             resourceTick();
         }
@@ -52,9 +51,9 @@ public class ResourceFlow : MonoBehaviour
     public void resourceTick()
     {
         List<GameObject> placedEquipment = equipmentManager.GetPlacedEquipment();
-        
+
         //get all placed items that arent processing, and dont have an empty processedResouce amount
-        IEnumerable<GameObject> equipmentEligableForDispatching = placedEquipment.Where(placedEquipmentItem => (placedEquipmentItem.GetComponent<Equipment>().IsFinishedProcessing == true && placedEquipmentItem.GetComponent<Equipment>().processedResource.amount > 0));
+        IEnumerable<GameObject> equipmentEligableForDispatching = placedEquipment.Where(placedEquipmentItem => (placedEquipmentItem.GetComponent<Equipment>().IsFinishedProcessing == true && placedEquipmentItem.GetComponent<Equipment>().GetProcessedResource().amount > 0));
         
         //tell them to distribute the resources they have 
         foreach (GameObject equipment in equipmentEligableForDispatching) {
@@ -73,7 +72,7 @@ public class ResourceFlow : MonoBehaviour
             *   - must accept the type this equipment is going to send
             *   - must not be full
             */
-            IEnumerable<Equipment> equipmentEligableForIngest = connections.Where(equipment => (equipment.IsFinishedProcessing == true && equipment.unprocessedResource.amount < equipment.maxUnprocessedAmount && equipment.unprocessedResource.type == placedEquipment.processedResource.type));
+            IEnumerable<Equipment> equipmentEligableForIngest = connections.Where(equipment => (equipment.IsFinishedProcessing == true && equipment.GetUnprocessedResource().amount < equipment.maxUnprocessedAmount && equipment.GetUnprocessedResource().name == placedEquipment.GetProcessedResource().name));
             if (equipmentEligableForIngest.Count() > 0) {
                 //get the max number of resources this item can output in a tick
                 //divide it by the number of equipment in equipmentEligableForIngest as to distribute evenly

@@ -7,6 +7,10 @@ public class Resource
 
     public float amount;
 
-    public string type;
+    public Resource(string resourceName, float startingAmount = 0)
+    {
+        name = resourceName;
+        amount = startingAmount;
+    }
 
 }

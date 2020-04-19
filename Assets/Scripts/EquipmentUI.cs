@@ -107,4 +107,5 @@ public class EquipmentUI : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
+
 }

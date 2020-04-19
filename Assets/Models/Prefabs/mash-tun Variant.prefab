@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 1
+  maxUnprocessedAmount: 10
+  maxProcessedAmount: 100
   processTime: 5
+  processAmount: 1
+  outputAmount: 1
   maxOutputConnections: 1
   upgrade: {fileID: 0}
+  IsFinishedProcessing: 0
+  isPlaced: 0
 --- !u!1001 &1386542463051312503
 PrefabInstance:
   m_ObjectHideFlags: 0
