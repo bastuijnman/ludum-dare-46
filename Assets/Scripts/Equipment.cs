@@ -11,7 +11,7 @@ public class Equipment : MonoBehaviour
 
     public GameObject upgrade;
 
-    public Equipment connection { get; set; }
+    protected List<Equipment> connections;
 
     // Start is called before the first frame update
     void Start()
@@ -23,5 +23,20 @@ public class Equipment : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void AddConnection(Equipment equipment)
+    {
+        connections.Add(equipment);
+    }
+
+    public void RemoveConnection(Equipment equipment)
+    {
+        connections.Remove(equipment);
+    }
+
+    public bool CanAcceptConnection()
+    {
+        return connections.Count < maxOutputConnections;
     }
 }

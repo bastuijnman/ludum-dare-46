@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using NesScripts.Tilemap;
 
 public class EquipmentManager : MonoBehaviour
 {
     public List<GameObject> availableEquipment;
-    protected List<GameObject> placedEquipment;
+    protected List<GameObject> placedEquipment = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -39,12 +40,19 @@ public class EquipmentManager : MonoBehaviour
             Debug.DrawLine(bl, tl, Color.red);
         }
 
+        /*
+         * Only open radial UI when it is not yet active.
+         */
         bool isUIEnabled = gameObject.GetComponent<EquipmentUI>().IsUIEnabled();
         if (Input.GetMouseButtonDown(0) && hover && !isUIEnabled) {
-            gameObject.GetComponent<EquipmentUI>().CreateUIFromAvailableEquipmentAndPosition(Input.mousePosition, availableEquipment);
+            gameObject.GetComponent<EquipmentUI>().ShowCreateUIFromAvailableEquipmentAndPosition(Input.mousePosition, availableEquipment);
         }
     }
 
+    /// <summary>
+    /// Add equipment to the current brewery. 
+    /// TODO: tile will need to be passed in, this can cause the wrong tile to be selected
+    /// </summary>
     public void AddEquipment(GameObject equipment)
     {
         Tile tile = FindHoveredTile();
@@ -86,5 +94,15 @@ public class EquipmentManager : MonoBehaviour
     public List<GameObject> GetPlacedEquipment()
     {
         return placedEquipment;
+    }
+
+    public float GetRunningCost()
+    {
+        float total = 0.0f;
+        placedEquipment.ForEach(gameObject => {
+            total += gameObject.GetComponent<Equipment>().cost;
+        });
+
+        return total;
     }
 }

@@ -23,7 +23,7 @@ public class EquipmentUI : MonoBehaviour
         return canvas.enabled;
     }
 
-    public void CreateUIFromAvailableEquipmentAndPosition(Vector2 position, List<GameObject> equipment)
+    public void ShowCreateUIFromAvailableEquipmentAndPosition(Vector2 position, List<GameObject> equipment)
     {
 
         // Cleanup any previous menu
@@ -38,13 +38,37 @@ public class EquipmentUI : MonoBehaviour
             GameObject button = Instantiate(radialButton);
             button.transform.SetParent(canvas.transform);
             button.transform.position = position + (new Vector2(Mathf.Sin((angle * i) * Mathf.Deg2Rad), Mathf.Cos((angle * i) * Mathf.Deg2Rad)) * radius);
-            button.GetComponent<Button>().onClick.AddListener(OnButtonClick(equipment.ElementAt(i)));
+            button.GetComponent<Button>().onClick.AddListener(OnCreateButtonClick(equipment.ElementAt(i)));
         }
 
         canvas.enabled = true;
     }
 
-    private UnityAction OnButtonClick(GameObject equipment)
+    public void ShowUpdateUIFromEquipmentAndPosition(Vector2 position, GameObject equipmentObject)
+    {
+        Equipment equipment = equipmentObject.GetComponent<Equipment>();
+
+        if (!equipment) {
+            return;
+        }
+
+        // TODO: Upgrade button
+        if (equipment.upgrade) {
+
+        }
+
+        // TODO Connect button
+        if (equipment.CanAcceptConnection()) {
+            
+        }
+
+    }
+
+    /// <summary>
+    /// Handles radial button click, will add the assigned equipment to the
+    /// equipment manager.
+    /// </summary>
+    private UnityAction OnCreateButtonClick(GameObject equipment)
     {
         return () => { 
             gameObject.GetComponent<EquipmentManager>().AddEquipment(equipment); 
