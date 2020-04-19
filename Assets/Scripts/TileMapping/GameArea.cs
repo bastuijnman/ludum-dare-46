@@ -45,11 +45,11 @@ namespace NesScripts.Tilemap
 			// create tiles array
 			_tiles = new Tile[Width, Height];
 
-			CreateLoadingZone(new Vector2 (0, 0), new Vector2 (30, 15));
-			CreateBrewingZone(new Vector2 (0, 15), new Vector2 (30, 30));
-			CreatePackagingZone(new Vector2 (0, 30), new Vector2 (30, 45));
+			CreateLoadingZone(new Vector2 (0, 0), new Vector2 (10, 3));
+			CreateBrewingZone(new Vector2 (0, 3), new Vector2 (10, 14));
+			CreatePackagingZone(new Vector2 (0, 14), new Vector2 (10, 18));
 
-			DecorateGameArea();
+			//DecorateGameArea();
 
 		}
 
