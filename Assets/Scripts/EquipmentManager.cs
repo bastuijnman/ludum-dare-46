@@ -7,6 +7,8 @@ using NesScripts.Tilemap;
 
 public class EquipmentManager : MonoBehaviour
 {
+    public Tile selectedTile;
+
     public List<GameObject> availableEquipment;
     protected List<GameObject> placedEquipment;
 
@@ -47,7 +49,7 @@ public class EquipmentManager : MonoBehaviour
          */
         bool isUIEnabled = gameObject.GetComponent<EquipmentUI>().IsUIEnabled();
         if (Input.GetMouseButtonDown(0) && hover && !isUIEnabled) {
-
+            selectedTile = hover;
             Transform equipment = hover.transform.Find("equipment");
 
             /* 
@@ -81,7 +83,7 @@ public class EquipmentManager : MonoBehaviour
     /// </summary>
     public void AddEquipment(GameObject equipment)
     {
-        Tile tile = FindHoveredTile();
+        Tile tile = selectedTile;
         
 		Vector3 blockCentre = new Vector3(tile.gameObject.transform.position.x, tile.gameObject.transform.position.y, tile.gameObject.transform.position.z);
 
