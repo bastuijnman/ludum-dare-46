@@ -90,6 +90,10 @@ public class EquipmentManager : MonoBehaviour
         placedEquipment.Add(placedObject);
     }
 
+    /// <summary>
+    /// Enter connection mode and highlight eligable equipment.
+    /// </summary>
+    /// <param name="equipment">Equipment that requests an outgoing connection</param>
     public void EnterConnectionMode(GameObject equipment)
     {
         placedEquipment.ForEach(item => {
@@ -100,6 +104,10 @@ public class EquipmentManager : MonoBehaviour
         activeConnector = equipment;
     }
 
+    /// <summary>
+    /// Leave the connection mode by setting equipment requesting an outgoing connection
+    /// to null. Also make sure to destroy all glow components.
+    /// </summary>
     protected void LeaveConnectionMode()
     {
         activeConnector = null;

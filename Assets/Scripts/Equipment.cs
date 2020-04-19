@@ -61,6 +61,11 @@ public class Equipment : MonoBehaviour
         connections.Remove(equipment);
     }
 
+    public List<Equipment> GetConnections()
+    {
+        return connections;
+    }
+
     /// <summary>
     /// Determines whether this equipment can have more output connections
     /// </summary>
@@ -68,5 +73,10 @@ public class Equipment : MonoBehaviour
     public bool CanAddConnection()
     {
         return connections.Count < maxOutputConnections;
+    }
+
+    public bool IsFinishedProcessing()
+    {
+        return false;
     }
 }
