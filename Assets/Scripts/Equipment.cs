@@ -36,7 +36,11 @@ public class Equipment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Vector3 position = transform.position;
+        connections.ForEach(connection => {
+            Debug.DrawLine(position, connection.gameObject.transform.position, Color.green);
+        });
+
     }
 
     /// <summary>
