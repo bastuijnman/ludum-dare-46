@@ -83,11 +83,7 @@ public class EquipmentManager : MonoBehaviour
     {
         Tile tile = FindHoveredTile();
         
-        //The idea here is that i get the height of the object from the mesh, then half it and add
-        //it as an offset to the placement height so it's alayws flush with the floor.
-        //The idea however, doesnt work. No clue where to go from here but things are all floaty.
-        float equipmentHeight = equipment.GetComponent<MeshFilter>().sharedMesh.bounds.extents.y * 2;
-		Vector3 blockCentre = new Vector3(tile.gameObject.transform.position.x, tile.gameObject.transform.position.y + (equipmentHeight / 2), tile.gameObject.transform.position.z);
+		Vector3 blockCentre = new Vector3(tile.gameObject.transform.position.x, tile.gameObject.transform.position.y, tile.gameObject.transform.position.z);
 
 		GameObject placedObject = (GameObject) Instantiate(equipment, blockCentre, equipment.transform.rotation, tile.transform);
         placedObject.name = "equipment";
