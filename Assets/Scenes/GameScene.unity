@@ -166,10 +166,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableEquipment:
-  - {fileID: 1840066131436077624, guid: 6b35e8adc6dbc45688b9b0f426f71fda, type: 3}
-  - {fileID: 5953573132051002513, guid: 4974eb8adb39a46d6a1a9323a2d99f88, type: 3}
-  - {fileID: 5613402323260711864, guid: adfc77060e62c4649961ce93ff1f2923, type: 3}
-  - {fileID: 3000398182035706882, guid: 74195e47a92c34c62ae1049859ba0f56, type: 3}
+  - {fileID: 5211812171463406856, guid: 748b214da2aa943b39530fa089bafec0, type: 3}
+  - {fileID: 7195496177463218104, guid: 92836c04ac0154bf2935721258dd85fa, type: 3}
+  - {fileID: 3353531165944881994, guid: debbaff15943c416789401128f0c44bb, type: 3}
+  - {fileID: 6925427989205513342, guid: 3dcce6b44017547179eaf6b277e34c90, type: 3}
 --- !u!114 &377637167
 MonoBehaviour:
   m_ObjectHideFlags: 0
