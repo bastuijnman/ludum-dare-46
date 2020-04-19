@@ -33,7 +33,10 @@ public class ResourceFlow : MonoBehaviour
                 List<Equipment> connections = item.GetConnections();
 
                 if (connections.Count > 0) {
-                    // TODO: Move results to connections.
+
+                    Resource resource = item.GetProcessedResource();
+                    connections.ForEach(connection => connection.IngestResource(resource));
+
                 } else {
                     // TODO: Add warning that resources are going to waste.
                 }

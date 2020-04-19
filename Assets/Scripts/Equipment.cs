@@ -69,6 +69,10 @@ public class Equipment : MonoBehaviour
         connections.Remove(equipment);
     }
 
+    /// <summary>
+    /// Get the output connections
+    /// </summary>
+    /// <returns>List of the connections</returns>
     public List<Equipment> GetConnections()
     {
         return connections;
@@ -86,5 +90,18 @@ public class Equipment : MonoBehaviour
     public bool IsFinishedProcessing()
     {
         return false;
+    }
+
+    public Resource GetProcessedResource()
+    {
+        return new Resource {
+            name = "test",
+            amount = 10
+        };
+    }
+
+    public void IngestResource(Resource resource)
+    {
+        
     }
 }
